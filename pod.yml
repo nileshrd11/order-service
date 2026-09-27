@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: order-service
+
+spec:
+  containers:
+    - name: order-service
+      image: nileshrd11/order-service:0daec0454ab1eb82a8c732f5572f1ede6ee7df85
+
+      ports:
+        - containerPort: 8080
+
+      env:
+        - name: DB_HOST
+          value: host.docker.internal
+
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: order-service-secret
+              key: DB_USERNAME
+
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: order-service-secret
+              key: DB_PASSWORD
